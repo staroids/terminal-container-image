@@ -15,12 +15,8 @@ jobs:
       id: get_version
       run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
       # access it through ${{ steps.get_version.outputs.VERSION }}
-    - name: Build docker image
-      run: |-
-        docker build -t "docker.pkg.github.com/${{ github.actor }}/${{ github.event.repository.name }}/system:${{ steps.get_version.outputs.VERSION }}" .
-    - name: Login
-      run: |-
-        echo $GITHUB_TOKEN | docker login https://docker.pkg.github.com -u ${{ github.actor }} --password-stdin
-    - name: Push
-      run: |-
-        docker push "docker.pkg.github.com/${{ github.actor }}/${{ github.event.repository.name }}/system:${{ steps.get_version.outputs.VERSION }}"
+    - name: Build and push
+      uses: matootie/github-docker@v2.2.2
+      with:
+        accessToken: ${{ secrets.GITHUB_TOKEN }}
+        imageTag: ${{ steps.get_version.outputs.VERSION }}
