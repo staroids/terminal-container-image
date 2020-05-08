@@ -13,7 +13,7 @@ RUN apt-get update && \
 ADD bootstrap.sh /usr/bin/bootstrap.sh
 
 # Note that staroid will override uid to random uid to large one. like 10000000.
-# In that case, gid becomes 0 and home directory access permission need to allow the group.
+# In that case, gid becomes 0 and home directory access permission need to allow the gid 0.
 RUN useradd system --uid 2100 --gid 0 --shell /bin/bash --home-dir /home/system --create-home && \    
     chmod -R 775 /home/system
 
