@@ -16,7 +16,6 @@ ADD bootstrap.sh /usr/bin/bootstrap.sh
 # In that case, gid becomes 0 and home directory access permission need to allow the gid 0.
 RUN useradd system --uid 2100 --gid 0 --shell /bin/bash --home-dir /home/system --create-home && \    
     chmod -R 775 /home/system && \
-    # Allow process to edit /etc/passwd, to create a user entry
-    chgrp root /etc/passwd && chmod ug+rw /etc/passwd
+    echo "export PS1=\"system@`hostname`\$ \"" >> /etc/bash.bashrc
 
 USER 2100
