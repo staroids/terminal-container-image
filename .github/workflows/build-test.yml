@@ -1,0 +1,20 @@
+name: Build and Test
+
+on:
+  push:
+    tags-ignore:
+      - '*.*'
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout latest code
+      uses: actions/checkout@v2
+    - name: Build docker image
+      run: |-
+        docker build -t "gcr.io/${{ secrets.GCP_PROJECT }}/${{ github.event.repository.name }}:${{ steps.get_version.outputs.VERSION }}" .

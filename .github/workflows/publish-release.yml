@@ -1,0 +1,32 @@
+name: Publish release
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  publish-release:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout latest code
+      uses: actions/checkout@v2
+    - name: Get the version
+      id: get_version
+      run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+      # access it through ${{ steps.get_version.outputs.VERSION }}
+    - name: Build docker image
+      run: |-
+        docker build -t "gcr.io/${{ secrets.GCP_PROJECT }}/${{ github.event.repository.name }}:${{ steps.get_version.outputs.VERSION }}" .
+    # setup gcloud cli
+    - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+      with:
+        version: '286.0.0'
+        service_account_key: ${{ secrets.GCP_SA_KEY }}
+        project_id: ${{ secrets.GCP_PROJECT }}
+    # configure gcr registry
+    - run: |-
+        gcloud --quiet auth configure-docker
+    - name: push
+      run: |-
+        docker push "gcr.io/${{ secrets.GCP_PROJECT }}/${{ github.event.repository.name }}:${{ steps.get_version.outputs.VERSION }}"
