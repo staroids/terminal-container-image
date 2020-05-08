@@ -15,9 +15,10 @@ jobs:
       id: get_version
       run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
       # access it through ${{ steps.get_version.outputs.VERSION }}
-    - name: Build and push
-      uses: matootie/github-docker@v2.2.2
+    - name: Build and Push
+      uses: elgohr/Publish-Docker-Github-Action@master
       with:
-        accessToken: ${{ secrets.GITHUB_TOKEN }}
-        imageTag: ${{ steps.get_version.outputs.VERSION }}
-        imageName: system # image name will be {owner}/{repo}/system
+        name: staroid/${{ github.event.repository.name }}
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        tags: "${{ steps.get_version.outputs.VERSION }}"
