@@ -20,3 +20,4 @@ jobs:
       with:
         accessToken: ${{ secrets.GITHUB_TOKEN }}
         imageTag: ${{ steps.get_version.outputs.VERSION }}
+        imageName: system # image name will be {owner}/{repo}/system
