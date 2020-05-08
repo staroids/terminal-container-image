@@ -36,4 +36,4 @@ myuid="$(id -u)"
 mygid="$(id -g)"
 
 # actual uid is overrided on runtime. So, update passwd to remove "I have no name!" in the prompt.
-echo "staroid:x:$myuid:$mygid:staroid:/home/system:/bin/false" >> /etc/passwd
+echo "system:x:$myuid:$mygid:system:/home/system:/bin/false" >> /etc/passwd
