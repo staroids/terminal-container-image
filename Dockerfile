@@ -8,6 +8,8 @@ RUN apt-get update && \
     mv ttyd_linux.x86_64 /usr/bin/ttyd && chmod +x /usr/bin/ttyd && \
     curl -LO https://github.com/wercker/stern/releases/download/1.11.0/stern_linux_amd64 && \
     mv stern_linux_amd64 /usr/bin/stern && chmod +x /usr/bin/stern && \
+    curl -LO https://github.com/jpillora/chisel/releases/download/v1.6.0/chisel_1.6.0_linux_amd64.gz && \
+    gunzip chisel_1.6.0_linux_amd64.gz && mv chisel_1.6.0_linux_amd64 /usr/bin/chisel && chmod +x /usr/bin/chisel && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 ADD bootstrap.sh /usr/bin/bootstrap.sh
