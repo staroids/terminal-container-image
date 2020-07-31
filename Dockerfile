@@ -1,7 +1,7 @@
 FROM ubuntu:18.04
 
 RUN apt-get update && \
-    apt-get install -y curl bash && \
+    apt-get install -y curl bash vim && \
     curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.16.3/bin/linux/amd64/kubectl && \
     mv kubectl /usr/bin/kubectl && chmod +x /usr/bin/kubectl && \
     curl -LO https://github.com/tsl0922/ttyd/releases/download/1.6.0/ttyd_linux.x86_64 && \
